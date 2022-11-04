@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block rightcontent %}
+{% if joke %}
+<div class="sticky-top" style="top: 50px">
+    <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+      <div class="card-header">Daily Joke</div>
+      <div class="card-body">
+        <p class="card-text">{{joke.setup}} <strong>{{joke.punchline}}</strong></p>
+        <p class="card-text"><small class="text-muted">{{joke.createdAt.strftime("%b %d %Y %H:%M:%S")}}</small></p>
+      </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock rightcontent %}
+
+{% block content %}
+{% for post in posts %}
+{% if request.user and request.user.username == post.val.author %}
+<form method="POST" action="{{url_for('updateBlog')}}">
+  <div class="form-group">
+    <input type="hidden" name="id" value="{{post.id}}">
+  </div>
+  <button type="submit" class="btn btn-link">Edit</button>
+</form>
+{% endif %}
+
+<div class="content-section">
+  <!-- <div class="card flex-md-row mb-4 box-shadow h-md-250"> -->
+    <div class="article-body">
+      {% if post.val.tag %}
+      {% for tag in post.val.tag %}
+      <span class="badge badge-pill badge-info">{{tag}}</span>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="card-body d-flex flex-column align-items-start">
+      <a class="mr-2" href="/author/{{post.val.author}}">@{{ post.val.author }}</a>
+      <small class="text-muted">{{ post.val.date.strftime("%b %d %Y %H:%M:%S") }}</small>
+      <h3 class="mb-0">
+        <h2><a class="article-title" href="/blog/{{post.id}}">{{ post.val.title }}</a></h2>
+      </h3>
+      
+      <p class="card-text mb-auto">
+        {% if request.path == "/home" or request.path == "/"%}
+        {{ post.val.content[:500] }}...
+        <a href="{{ url_for('readBlog',blogid=post.id ) }}">Continue reading</a>
+        {% else %}
+        {{ post.val.content|safe }}
+        {% endif %}
+      </p>
+    </div>
+    {% if post.val.url and post.val.url|length > 1 %}
+    <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail" style="width: 100%; height: 300px;" src="{{post.val.url}}" data-holder-rendered="true">
+    {% endif %}
+
+</div>
+
+{% endfor %}
+
+{% block comments %}{% endblock %}
+{% endblock content %}

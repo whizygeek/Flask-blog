@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label class="sr-only" for="inlineFormInputGroup">Username</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                </div>
+                <input type="text" name="author" readonly class="form-control" id="inlineFormInputGroup"
+                    placeholder="author" value="{{request.user['username']}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Write Title</label>
+            <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="Title 1">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Write Content</label>
+            <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="tags">Tags</label>
+            <textarea name="tags" class="tags form-control" id="tags"
+                placeholder="python, java, programming"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Example file input</label>
+            <input name="file" type="file" class="form-control-file" id="exampleFormControlFile1"  onchange="loadFile(event)" accept="image/*">
+        </div>
+        <img id="output" style="width: 100%; height: 500px;"/>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+{% endblock content %}

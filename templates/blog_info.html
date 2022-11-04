@@ -1,0 +1,25 @@
+{% extends 'home.html'%}
+
+{% block comments %}
+
+<h3>Comments</h3>
+<hr class="my-12" />
+
+<form action="{{url_for('postComment')}}" method="POST" class="form-group mb-5">
+    <input type="hidden" name="id" value="{{posts[0].id}}">
+    <textarea class="form-control comment" type="text" name="comment" placeholder="Enter comment"></textarea>
+    <button type="submit" class="btn btn-info w-100">Submit <i class="fa fa-comments-o"></i></button>
+</form>
+
+{% for comment_id, comment_val in comments.items()%}
+<div class="list-group-item list-group-item-action flex-column align-items-start mb-5">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">@{{comment_val.username}}</h5>
+      <small>at {{comment_val.createdAt.strftime("%b %d %Y %H:%M:%S")}}</small>
+    </div>
+    <p class="mb-1">{{comment_val.comment}}</p>
+  </div>
+{% endfor %}
+
+
+{% endblock comments%}

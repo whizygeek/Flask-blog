@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="{{url_for('home')}}" enctype="multipart/form-data" >
+        <div class="form-group">
+            <input type="hidden" name="id" value="{{post.id}}">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="inlineFormInputGroup">Username</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                </div>
+                <input type="text" name="author" class="form-control" id="inlineFormInputGroup" placeholder="author"
+                    value="{{post.val.author}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Write Title</label>
+            <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="Title 1"
+                value="{{post.val.title}}">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Write Content</label>
+            <textarea name="content" class="form-control" id="exampleFormControlTextarea1"
+                rows="3">{{post.val.content}}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="tags">Tags</label>
+            <textarea name="tag" class="tags form-control" id="tags"
+                placeholder="python, java, programming">{{','.join(post.val.tag)}}</textarea>
+        </div>
+        
+        <img id="output" style="width: 100%; height: 500px;" src="{{post.val.url}}"/>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+    <form method="POST" action="{{url_for('deleteBlog')}}">
+        <div class="form-group">
+            <input type="hidden" name="id" value="{{post.id}}">
+        </div>
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div>
+{% endblock content %}
