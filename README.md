@@ -6,7 +6,7 @@
 * Firestore
 * Google cloud storage
 
-Blog user required to be signed in to use the platform, hence authentication is provided.
+Authentication is provided for the security reason.
 
 ### The user can perform:
 * Create blog with title, description, tag, photo
